@@ -7,9 +7,14 @@
     "formik": "^2.0.4",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
+<<<<<<< HEAD:anywhere_fitness/package.json
     "react-scripts": "3.2.0",
     "styled-components": "^4.4.1",
     "yup": "^0.27.0"
+=======
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "3.2.0"
+>>>>>>> 67f0d63a2077642e1a27fa2250ca322fcab55b4a:my-app/package.json
   },
   "scripts": {
     "start": "react-scripts start",
