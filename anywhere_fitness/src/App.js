@@ -1,15 +1,11 @@
 import React from 'react';
 import './App.css';
-//import Register from './components/Register';
-import Navigation from './components/Navigation';
-import ClientDashList from './components/ClientDashList';
-
+import Routes from './utils/Routes';
 
 function App() {
   return (
-    <div className="App">
-      <Navigation/>
-      <ClientDashList/>
+    <div className='App'>
+      <Routes />
     </div>
   );
 }
