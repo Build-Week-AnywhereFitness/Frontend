@@ -3,7 +3,7 @@ import NavBar from './NavBar'
 import Cards from './Cards'
 import AddButton from "./AddButton"
 
-const DashBoard = (props) => {
+const CoachDashBoard = (props) => {
 
     return (
         <content>
@@ -16,4 +16,4 @@ const DashBoard = (props) => {
     );
 };
 
-export default DashBoard;
+export default CoachDashBoard;
