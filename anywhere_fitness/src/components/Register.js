@@ -63,9 +63,13 @@ const Button = styled('button')`
 
 const NewUser = ({ values, errors, touched, status }) => {
   const [user, setUser] = useState([]);
+  const [message, setMessage] = useState('');
 
   useEffect(() => {
-    status && setUser(user => [...user, status]);
+    if (status) {
+      setMessage(status.message);
+      setUser(user => [...user, status.data[0]]);
+    }
   }, [status]);
 
   return (
@@ -77,14 +81,14 @@ const NewUser = ({ values, errors, touched, status }) => {
           </Title>
           <FieldWrapper>
             <Hl>First Name : </Hl>
-            <Field type='text' name='fName' placeholder='Required' />
+            <Field type='text' name='first_name' placeholder='Required' />
           </FieldWrapper>
-          {touched.fName && errors.fName && <P className='error'>{errors.fName}</P>}
+          {touched.first_name && errors.first_name && <P className='error'>{errors.first_name}</P>}
           <FieldWrapper>
             <Hl>Last Name : </Hl>
-            <Field type='text' name='lName' placeholder='Required' />
+            <Field type='text' name='last_name' placeholder='Required' />
           </FieldWrapper>
-          {touched.lName && errors.lName && <P className='error'>{errors.lName}</P>}
+          {touched.last_name && errors.last_name && <P className='error'>{errors.last_name}</P>}
           <FieldWrapper>
             <Hl>Username : </Hl>
             <Field type='text' name='username' placeholder='Required' />
@@ -112,23 +116,17 @@ const NewUser = ({ values, errors, touched, status }) => {
           {touched.coachCode && errors.coachCode && <P className='error'>{errors.coachCode}</P>}
 
           <Button>Register</Button>
-          {user.map(user => (
-            <div>
-              <p>
-                Thank you {user.fName} confirmation sent to {user.email}
-              </p>
-            </div>
-          ))}
+          <div>{message}</div>
         </Container>
       </Form>
     </div>
   );
 };
 const FormikNewUser = withFormik({
-  mapPropsToValues({ fName, lName, username, email, password, coachCode, confirmPass }) {
+  mapPropsToValues({ first_name, last_name, username, email, password, coachCode, confirmPass }) {
     return {
-      fName: fName || '',
-      lName: lName || '',
+      first_name: first_name || '',
+      last_name: last_name || '',
       username: username || '',
       password: password || '',
       confirmPass: confirmPass || '',
@@ -138,25 +136,25 @@ const FormikNewUser = withFormik({
   },
 
   validationSchema: Yup.object().shape({
-    fName: Yup.string().required('*Required'),
-    lName: Yup.string().required('*Required'),
-    username: Yup.string().required('*Required'),
+    first_name: Yup.string().required('Required*'),
+    last_name: Yup.string().required('Required*'),
+    username: Yup.string().required('Required*'),
     password: Yup.string()
-      .min(8, '* must have at least 8 characters')
-      .required('*Required'),
+      .min(8, 'must have at least 8 characters*')
+      .required('Required*'),
     confirmPass: Yup.string().when('password', {
       is: val => (val && val.length > 0 ? true : false),
-      then: Yup.string().oneOf([Yup.ref('password')], 'Both password need to be the same'),
+      then: Yup.string().oneOf([Yup.ref('password')], 'Both password need to be the same*'),
     }),
     email: Yup.string()
       .email('* Email not valid')
-      .required('*Required'),
+      .required('Required*'),
     coachCode: Yup.string(),
   }),
 
   handleSubmit(values, { setStatus }) {
     axios
-      .post('https://reqres.in/api/users/', values)
+      .post('https://anywhere--fitness.herokuapp.com/register', values)
       .then(response => {
         console.log(response);
         setStatus(response.data);
