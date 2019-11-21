@@ -3,7 +3,7 @@ import { withFormik, Form, Field as Field_ } from 'formik';
 import styled from 'styled-components';
 import axios from 'axios';
 import * as Yup from 'yup';
-import { axiosWithAuth } from '../utils/AxiosWithAuth';
+import AxiosWithAuth from '../utils/AxiosWithAuth';
 
 const Container = styled('div')`
   display: flex;
@@ -70,7 +70,7 @@ const NewUser = ({ values, props, errors, touched, status }) => {
   }, [status]);
 
   const onSubmit = values => {
-    axiosWithAuth()
+    AxiosWithAuth()
       .post('/auth/register', values)
       .then(response => {
         localStorage.setItem('token', response.data.token);
@@ -167,10 +167,19 @@ const FormikNewUser = withFormik({
     coachCode: Yup.string(),
   }),
 
-  handleSubmit(values, { setStatus }) {
-    axiosWithAuth()
-      .post('/register', values)
+  handleSubmit(values, { setStatus, props }) {
+    const payload = {
+      first_name: values.fName,
+      last_name: values.lName,
+      username: values.username,
+      password: values.password,
+      email: values.email,
+      authCode: values.coachCode,
+    };
+    AxiosWithAuth()
+      .post('/register', payload)
       .then(response => {
+        props.history.push('/');
         console.log(response);
         setStatus(response.data);
       })

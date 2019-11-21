@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -8,7 +8,8 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { axiosWithAuth } from '../utils/AxiosWithAuth';
+import AxiosWithAuth from '../utils/AxiosWithAuth';
+import CoachContext from '../contexts/CoachContext';
 
 function Copyright() {
   return (
@@ -47,12 +48,15 @@ const useStyles = makeStyles(theme => ({
 export default function Login(props) {
   const classes = useStyles();
 
+  const { setUser } = useContext(CoachContext);
+
   const onSubmit = (e, values) => {
     e.preventDefault();
-    axiosWithAuth()
+    AxiosWithAuth()
       .post('/login', { username: 'dSmith', password: '12345678' })
       .then(response => {
         localStorage.setItem('token', response.data.token);
+        setUser(response.data.data);
         console.log(response);
         props.history.push('/CoachDashBoard');
       })
