@@ -3,6 +3,7 @@ import { withFormik, Form, Field as Field_ } from 'formik';
 import styled from 'styled-components';
 import axios from 'axios';
 import * as Yup from 'yup';
+import { axiosWithAuth } from '../utils/AxiosWithAuth';
 
 const Container = styled('div')`
   display: flex;
@@ -61,12 +62,24 @@ const Button = styled('button')`
   }
 `;
 
-const NewUser = ({ values, errors, touched, status }) => {
+const NewUser = ({ values, props, errors, touched, status }) => {
   const [user, setUser] = useState([]);
 
   useEffect(() => {
     status && setUser(user => [...user, status]);
   }, [status]);
+
+  const onSubmit = values => {
+    axiosWithAuth()
+      .post('/Register', values)
+      .then(response => {
+        localStorage.setItem('token', response.data.token);
+        props.history.push('/CoachDashBoard');
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
 
   return (
     <div>

@@ -8,12 +8,13 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { axiosWithAuth } from '../utils/AxiosWithAuth';
 
 function Copyright() {
   return (
-    <Typography variant="body2" color="textSecondary" align="center">
+    <Typography variant='body2' color='textSecondary' align='center'>
       {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
+      <Link color='inherit' href='https://material-ui.com/'>
         Anywhere Fitness
       </Link>{' '}
       {new Date().getFullYear()}
@@ -43,50 +44,58 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function Login() {
+export default function Login(props) {
   const classes = useStyles();
 
+  const onSubmit = (e, values) => {
+    e.preventDefault();
+    axiosWithAuth()
+      .post('/login', { username: 'dSmith', password: '12345678' })
+      .then(response => {
+        localStorage.setItem('token', response.data.token);
+        console.log(response);
+        props.history.push('/CoachDashBoard');
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component='main' maxWidth='xs'>
       <CssBaseline />
       <div className={classes.paper}>
-            <img src={process.env.PUBLIC_URL + '/logo.png'} height='100px' /> 
-        <form className={classes.form} Validate>
+        <img src={process.env.PUBLIC_URL + '/logo.png'} height='100px' />
+        <form className={classes.form} onSubmit={e => onSubmit(e, {})} Validate>
           <TextField
-            variant="outlined"
-            margin="normal"
+            variant='outlined'
+            margin='normal'
             required
             fullWidth
-            id="username"
-            label="Username"
-            name="username"
-            autoComplete="username"
+            id='username'
+            label='Username'
+            name='username'
+            autoComplete='username'
             autoFocus
           />
           <TextField
-            variant="outlined"
-            margin="normal"
+            variant='outlined'
+            margin='normal'
             required
             fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
+            name='password'
+            label='Password'
+            type='password'
+            id='password'
+            autoComplete='current-password'
           />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
+          <Button type='submit' fullWidth variant='contained' color='primary' className={classes.submit}>
             Sign In
           </Button>
           <Grid container>
             <Grid item>
-              <Link href="#" variant="body2">
-                {"Not a Member? Sign Up Here"}
+              <Link href='#' variant='body2'>
+                {'Not a Member? Sign Up Here'}
               </Link>
             </Grid>
           </Grid>
