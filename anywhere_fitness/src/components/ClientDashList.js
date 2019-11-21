@@ -1,33 +1,34 @@
-import React from "react";
+import React from 'react';
 import ClientDashCard from './ClientDashCard';
 //import axios from "axios";
-import styled from 'styled-components'
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
-const ClientDashList = ()=> {
-  
+const ClientDashList = () => {
   return (
     <Wrapper>
-      
-        <ClientDashCard 
-            key= "1"//{workout.id} 
-            image=""//{workout.image} 
-            name="Yoga"//{workout.name} 
-            time="02:30 pm"//{workout.time} 
-            date="11/19/19"//{workout.date} 
-            duration="30 Min"//{workout.duration} 
-            intesity="High"//{workout.intesity} 
-            location="20160 west dixie"//{workout.location} 
-            
-            />
-       
+      <ClientDashCard
+        key='1' //{workout.id}
+        image='' //{workout.image}
+        name='Yoga' //{workout.name}
+        time='02:30 pm' //{workout.time}
+        date='11/19/19' //{workout.date}
+        duration='30 Min' //{workout.duration}
+        intesity='High' //{workout.intesity}
+        location='20160 west dixie' //{workout.location}
+      />
+
+      <Link to='/' onClick={() => localStorage.removeItem('token')}>
+        Logout
+      </Link>
     </Wrapper>
-  )
-}
+  );
+};
 
 const Wrapper = styled('div')`
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
-`
+`;
 
-export default ClientDashList
+export default ClientDashList;

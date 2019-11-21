@@ -94,7 +94,7 @@ export default function Login(props) {
           </Button>
           <Grid container>
             <Grid item>
-              <Link href='#' variant='body2'>
+              <Link href='/register' variant='body2'>
                 {'Not a Member? Sign Up Here'}
               </Link>
             </Grid>

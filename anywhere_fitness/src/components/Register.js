@@ -71,7 +71,7 @@ const NewUser = ({ values, props, errors, touched, status }) => {
 
   const onSubmit = values => {
     axiosWithAuth()
-      .post('/Register', values)
+      .post('/auth/register', values)
       .then(response => {
         localStorage.setItem('token', response.data.token);
         props.history.push('/CoachDashBoard');
@@ -168,8 +168,8 @@ const FormikNewUser = withFormik({
   }),
 
   handleSubmit(values, { setStatus }) {
-    axios
-      .post('https://reqres.in/api/users/', values)
+    axiosWithAuth()
+      .post('/register', values)
       .then(response => {
         console.log(response);
         setStatus(response.data);
