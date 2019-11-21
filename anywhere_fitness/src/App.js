@@ -5,6 +5,7 @@ import CoachDashBoard from './components/CoachDashBoard';
 import Login from './components/Login';
 import Register from './components/Register';
 import ClientDashList from './components/ClientDashList';
+import AllWorkouts from './components/AllWorkouts';
 import NavBar from './components/NavBar';
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
       <Route exact path="/" component={Login}/>
       <Route path="/coachdashboard" component={CoachDashBoard}/>
       <Route path="/clientdashbord" component={ClientDashList}/>
+      <Route path="/allworkouts" component={AllWorkouts}/>
       <Route path="/register" component={Register}/>
     </div>
   );
