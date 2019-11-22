@@ -3,6 +3,7 @@ import { withFormik, Form, Field as Field_ } from 'formik';
 import styled from 'styled-components';
 import axios from 'axios';
 import * as Yup from 'yup';
+import AxiosWithAuth from '../utils/AxiosWithAuth';
 
 const Container = styled('div')`
   display: flex;
@@ -61,12 +62,24 @@ const Button = styled('button')`
   }
 `;
 
-const NewUser = ({ values, errors, touched, status }) => {
+const NewUser = ({ values, props, errors, touched, status }) => {
   const [user, setUser] = useState([]);
 
   useEffect(() => {
     status && setUser(user => [...user, status]);
   }, [status]);
+
+  const onSubmit = values => {
+    AxiosWithAuth()
+      .post('/auth/register', values)
+      .then(response => {
+        localStorage.setItem('token', response.data.token);
+        props.history.push('/CoachDashBoard');
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
 
   return (
     <div>
@@ -154,10 +167,19 @@ const FormikNewUser = withFormik({
     coachCode: Yup.string(),
   }),
 
-  handleSubmit(values, { setStatus }) {
-    axios
-      .post('https://reqres.in/api/users/', values)
+  handleSubmit(values, { setStatus, props }) {
+    const payload = {
+      first_name: values.fName,
+      last_name: values.lName,
+      username: values.username,
+      password: values.password,
+      email: values.email,
+      authCode: values.coachCode,
+    };
+    AxiosWithAuth()
+      .post('/register', payload)
       .then(response => {
+        props.history.push('/');
         console.log(response);
         setStatus(response.data);
       })

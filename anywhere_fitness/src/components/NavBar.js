@@ -73,7 +73,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const  PrimarySearchAppBar = (props) => {
+const PrimarySearchAppBar = props => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -107,8 +107,7 @@ const  PrimarySearchAppBar = (props) => {
       keepMounted
       transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       open={isMenuOpen}
-      onClose={handleMenuClose}
-    >
+      onClose={handleMenuClose}>
       <MenuItem onClick={handleMenuClose}>Sign Out</MenuItem>
     </Menu>
   );
@@ -117,37 +116,34 @@ const  PrimarySearchAppBar = (props) => {
 
   const renderMobileMenu = (
     <>
-    <Menu
-      anchorEl={mobileMoreAnchorEl}
-      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-      id={mobileMenuId}
-      keepMounted
-      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-      open={isMobileMenuOpen}
-      onClose={handleMobileMenuClose}
-    >
-      
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <ExitToAppIcon />
-        </IconButton>
-        <p>Sign Out</p>
-      </MenuItem>
-    </Menu>
+      <Menu
+        anchorEl={mobileMoreAnchorEl}
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+        id={mobileMenuId}
+        keepMounted
+        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+        open={isMobileMenuOpen}
+        onClose={handleMobileMenuClose}>
+        <MenuItem onClick={handleProfileMenuOpen}>
+          <IconButton
+            aria-label='account of current user'
+            aria-controls='primary-search-account-menu'
+            aria-haspopup='true'
+            color='inherit'>
+            <ExitToAppIcon />
+          </IconButton>
+          <p>Sign Out</p>
+        </MenuItem>
+      </Menu>
     </>
   );
 
   return (
     <div className={classes.grow}>
-      <AppBar position="static">
+      <AppBar position='static'>
         <Toolbar>
-        <img src={process.env.PUBLIC_URL + '/logo.png'} height='100px' /> 
-          <Typography className={classes.title} variant="h6" noWrap>
+          <img src={process.env.PUBLIC_URL + '/logo.png'} height='100px' />
+          <Typography className={classes.title} variant='h6' noWrap>
             Anywhere Fitness | Dash Board
           </Typography>
           <div className={classes.search}>
@@ -155,7 +151,7 @@ const  PrimarySearchAppBar = (props) => {
               <SearchIcon />
             </div>
             <InputBase
-              placeholder="Search…"
+              placeholder='Search…'
               classes={{
                 root: classes.inputRoot,
                 input: classes.inputInput,
@@ -164,26 +160,24 @@ const  PrimarySearchAppBar = (props) => {
             />
           </div>
           <div className={classes.grow} />
-          <div className={classes.sectionDesktop}> 
+          <div className={classes.sectionDesktop}>
             <IconButton
-              edge="end"
-              aria-label="account of current user"
+              edge='end'
+              aria-label='account of current user'
               aria-controls={menuId}
-              aria-haspopup="true"
+              aria-haspopup='true'
               onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
+              color='inherit'>
               <ExitToAppIcon />
             </IconButton>
           </div>
           <div className={classes.sectionMobile}>
             <IconButton
-              aria-label="show more"
+              aria-label='show more'
               aria-controls={mobileMenuId}
-              aria-haspopup="true"
+              aria-haspopup='true'
               onClick={handleMobileMenuOpen}
-              color="inherit"
-            >
+              color='inherit'>
               <MoreIcon />
             </IconButton>
           </div>
@@ -193,7 +187,6 @@ const  PrimarySearchAppBar = (props) => {
       {renderMenu}
     </div>
   );
-}
+};
 
-
-export default PrimarySearchAppBar 
+export default PrimarySearchAppBar;
